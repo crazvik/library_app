@@ -25,4 +25,14 @@ public class BookController {
     public ResponseEntity<Book> saveBook(@Validated @RequestBody Book book) {
         return ResponseEntity.ok(bookService.create(book));
     }
+
+    @PutMapping
+    public void updateBook(@PathVariable String id, @Validated @RequestBody Book book) {
+        bookService.update(id, book);
+    }
+
+    @DeleteMapping
+    public void deleteBook(@PathVariable String id) {
+        bookService.delete(id);
+    }
 }
