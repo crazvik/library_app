@@ -1,8 +1,6 @@
 package se.ecutb.library_app.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,26 +14,33 @@ import java.util.List;
 public class BookService {
     private final BookRepository bookRepository;
 
-    @Cacheable(value = "bookCache")
     public List<Book> findAll(String title) {
         return bookRepository.findAll();
     }
 
-    @Cacheable(value = "bookCache", key = "#result.id")
+    public Book findById(String id) {
+        return bookRepository.findById(id).orElseThrow(()
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                String.format("Couldn't find book with id %s", id)));
+    }
+
     public Book create(Book book) {
         return bookRepository.save(book);
     }
 
-    @Cacheable(value = "bookCache", key = "#id")
     public Book update(String id, Book book) {
+        if(!bookRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Couldn't find book with id %s", id));
+        }
+        book.setId(id);
         return bookRepository.save(book);
     }
 
-    @Cacheable(value = "bookCache", key = "#id")
     public void delete(String id) {
         if(!bookRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Could not find book with id %s", id));
+                    String.format("Couldn't not find book with id %s", id));
         }
         bookRepository.deleteById(id);
     }
