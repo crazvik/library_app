@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 
 import javax.validation.constraints.NotEmpty;
 
-
 @Data
 @Builder
 @NoArgsConstructor
