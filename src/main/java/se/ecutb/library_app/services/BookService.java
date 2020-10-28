@@ -14,7 +14,7 @@ import java.util.List;
 public class BookService {
     private final BookRepository bookRepository;
 
-    public List<Book> findAll(String title) {
+    public List<Book> findAll() {
         return bookRepository.findAll();
     }
 

@@ -19,7 +19,7 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<Book>> findAllBooks(String title) {
-        return ResponseEntity.ok(bookService.findAll(title));
+        return ResponseEntity.ok(bookService.findAll());
     }
 
     @GetMapping("/{id}")
