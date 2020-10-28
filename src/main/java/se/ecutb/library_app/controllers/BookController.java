@@ -17,8 +17,8 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public ResponseEntity<List<Book>> findAllBooks(@RequestParam(required = false) String title) {
-        return ResponseEntity.ok(bookService.findAll(title));
+    public ResponseEntity<List<Book>> findAllBooks(@RequestParam(required = false) String id) {
+        return ResponseEntity.ok(bookService.findAll(id));
     }
 
     @PostMapping
@@ -27,12 +27,12 @@ public class BookController {
     }
 
     @PutMapping
-    public void updateBook(@PathVariable String id, @Validated @RequestBody Book book) {
+    public void updateBook(@RequestParam(required = false) String id, @Validated @RequestBody Book book) {
         bookService.update(id, book);
     }
 
     @DeleteMapping
-    public void deleteBook(@PathVariable String id) {
+    public void deleteBook(@RequestParam(required = false) String id) {
         bookService.delete(id);
     }
 }
